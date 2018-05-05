@@ -7,15 +7,15 @@
 #include<numeric>
 
 using namespace std;
-typedef float fp;
+
 
 class neuron {
 public:
 	neuron(vector<float>, float); //Constructor1, weight provided
 	neuron(int); //Constructor2, no weight provided, start of the program
 	~neuron(); //Destructor
-	neuron(const neuron&); //copy constructor
-	neuron& operator = (const neuron&); //assignment operator
+	neuron(const neuron&); //Copy constructor for Weights, Bias and Output
+	neuron& operator = (const neuron&); //Assignment operator for neuron
 
 
 	void setWeights(vector<float>); //Sets provided weights to vector Weights
