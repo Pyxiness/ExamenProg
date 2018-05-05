@@ -192,7 +192,7 @@ vector<float> layer::dsigmoid(vector<float*> Input)
 		{
 			throw std::invalid_argument("\nlayer::dsigmoid: dimension mismatch\n");
 		}
-		/
+
 		int count = 0;
 		std::transform(Neurons.begin(), Neurons.end(), DSigmoidOutput.begin(),
 			[&](neuron &Neuron) {
