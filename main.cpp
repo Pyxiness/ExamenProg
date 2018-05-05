@@ -29,7 +29,7 @@ int main() {
 
 	try {
 		layer lay(nneuron, ninputs); //constructor2 for initialization
-		//cout << x << endl;
+		
 		vector<vector<float>> LW = lay.getWeights();
 		
 		vector<float> LB = lay.getBias();
