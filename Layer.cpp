@@ -14,7 +14,12 @@ layer::layer(const vector<vector<float>>& LayerWeights, const vector<float>& Lay
 	FirstLayer = FirstLayerParam;
 	NumberOfNeurons = LayerBias.size();
 	NumberOfInputs = LayerWeights.at(0).size(); //Because it is a priori known that every neuron takes an equal amount of inputs
-
+	LayerOutput.resize(NumberOfNeurons);
+	OutputPTR.resize(NumberOfNeurons);
+	std::transform(LayerOutput.begin(), LayerOutput.end(), OutputPTR.begin(),
+		[](float& num) {
+		return &num;
+	});
 	Neurons.reserve(NumberOfNeurons);
 	for (size_t i = 0; i < NumberOfNeurons; i++) //let's not use iterators here, shall we?
 	{
@@ -40,7 +45,12 @@ layer::layer(const int& InitNumberOfNeurons, const int& InitNumberOfInputs, bool
 	FirstLayer = FirstLayerParam;
 	NumberOfNeurons = InitNumberOfNeurons;
 	NumberOfInputs = InitNumberOfInputs;
-
+	LayerOutput.resize(NumberOfNeurons);
+	OutputPTR.resize(NumberOfNeurons);
+	std::transform(LayerOutput.begin(), LayerOutput.end(), OutputPTR.begin(),
+		[](float& num) {
+		return &num;
+	});
 	Neurons.reserve(NumberOfNeurons);
 	for (size_t i = 0; i < NumberOfNeurons; i++) //let's not use iterators here, shall we?
 	{
@@ -159,9 +169,9 @@ vector<neuron> layer::getNeurons()
 	return Neurons;
 }
 
-vector<float> layer::resultFunc(const vector<float*>& LayerInput)
+vector<float*> layer::resultFunc(const vector<float*>& LayerInput)
 {
-	vector<float> LayerOutput(NumberOfNeurons);
+	//vector<float> LayerOutput(NumberOfNeurons);
 	if (FirstLayer == true)
 	{
 		if (LayerInput.size() != NumberOfNeurons)
@@ -201,7 +211,7 @@ vector<float> layer::resultFunc(const vector<float*>& LayerInput)
 			return Neuron.resultFunc(LayerInput);
 		});
 	}
-	return LayerOutput;
+	return OutputPTR;
 }
 
 vector<float> layer::dsigmoid(const vector<float*>& Input)
@@ -241,5 +251,22 @@ vector<float> layer::dsigmoid(const vector<float*>& Input)
 			return Neuron.dsigmoid(Input);
 		});
 	}
+	return DSigmoidOutput;
+}
+
+vector<float> layer::dsigmoid()
+{
+	//same reasoning as in resultFunc
+	vector<float> DSigmoidOutput(NumberOfNeurons);
+		/*for (int i = 0; i < NumberOfNeurons; i++)
+		{
+		z = Neurons.at(i).activateFunc(Input);
+		DSigmoidOutput.at(i) = *Neurons.at(i).dsigmoid(z);
+		}*/
+		//int count = 0;
+		std::transform(Neurons.begin(), Neurons.end(), DSigmoidOutput.begin(),
+			[&](neuron &Neuron) {
+			return Neuron.dsigmoid();
+		});
 	return DSigmoidOutput;
 }

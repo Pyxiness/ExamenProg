@@ -19,7 +19,6 @@ neuron::neuron(const int& WeightVectorSize)
 	});
 
 	Bias = randomize(-1, 1);
-	NeuronUpdate = false;
 }
 
 
@@ -53,13 +52,11 @@ void neuron::setWeights(const vector<float>& WeightVector)
 	{
 		Weights[i] = *WeightVector[i];
 	}*/
-	NeuronUpdate = false;
 }
 
 void neuron::setBias(const float& BiasNumber)
 {
 	Bias = BiasNumber;
-	NeuronUpdate = false;
 }
 
 float neuron::randomize(float Minimum, float Maximum)
@@ -98,16 +95,13 @@ void neuron::sigmoid(float& z)
 
 float neuron::dsigmoid(const vector<float*>& input)
 {
-	if (NeuronUpdate == true)
-	{
-		
-	}
-	else
-	{
-		NeuronUpdate = true;
-		activateFunc(input);
-		sigmoid(Output);
-	}
+	activateFunc(input);
+	sigmoid(Output);
+	return Output*(1 - Output);;
+}
+
+float neuron::dsigmoid()
+{
 	return Output*(1 - Output);;
 }
 
@@ -132,7 +126,6 @@ void neuron::activateFunc(const vector<float*>& input)
 
 float neuron::resultFunc(const vector<float*>& input)
 {
-	NeuronUpdate = true;
 	activateFunc(input);
 	sigmoid(Output);
 	return  Output;
