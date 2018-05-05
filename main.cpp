@@ -31,10 +31,9 @@ int main() {
 		layer pi(NS, WS);
 		vector<vector<float>> LW = pi.getWeights();
 		vector<float> LB = pi.getBias();
-		cout << LB[0] << endl;
 		cout << "Weights: " << pi.getWeights()[0][0] << "," << pi.getWeights()[0][1] << " | " << pi.getWeights()[1][0] << "," << pi.getWeights()[1][1] << endl;
 		cout << "Bias: " << pi.getBias()[0] << " | " << pi.getBias()[1] << endl;
-		cout << "Result: " << pi(FInput)[0] << " | " << pi(FInput)[1] << endl;
+		cout << "Result: " << *pi(FInput)[0] << " | " << *pi(FInput)[1] << endl;
 		cout << "DSigmoid: " << pi.dsigmoid(FInput)[0] << " | " << pi.dsigmoid(FInput)[1] << endl;
 
 		int loopsize = 100;
