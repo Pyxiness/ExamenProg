@@ -270,3 +270,5 @@ vector<float> layer::dsigmoid()
 		});
 	return DSigmoidOutput;
 }
+
+
