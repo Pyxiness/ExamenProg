@@ -13,70 +13,77 @@ float randomize(float Minimum, float Maximum)
 
 int main() {
 	float x = 1;
-//	float y = 0;
+	
 	auto start = std::chrono::system_clock::now();
-	int NS = 150;
-	int WS = 728;
-	vector<float*> FInput(WS);
+	int nneuron = 150; //number of neurons
+	int ninputs = 728; //number of inputs per neuron
+	vector<float*> FInput(ninputs);
+	//for loop that has been changed into an algorithm. Given for clarity of the algorithm
 	/*for (int j = 0; j < WS; j++)
 	{
-		FInput[j] = &x;
+	FInput[j] = &x;
 	}*/
-	std::generate(FInput.begin(),FInput.end(),
+	std::generate(FInput.begin(), FInput.end(),
 		[&]() {
 		return &x;
 	});
 
+	//copy constructor and assignment operator test
 	try {
-		layer pi(NS, WS);
-		vector<vector<float>> LW = pi.getWeights();
-		vector<float> LB = pi.getBias();
-		cout << "Weights: " << pi.getWeights()[0][0] << "," << pi.getWeights()[0][1] << " | " << pi.getWeights()[1][0] << "," << pi.getWeights()[1][1] << endl;
-		cout << "Bias: " << pi.getBias()[0] << " | " << pi.getBias()[1] << endl;
-		cout << "Result: " << *pi(FInput)[0] << " | " << *pi(FInput)[1] << endl;
-		cout << "DSigmoid: " << pi.dsigmoid(FInput)[0] << " | " << pi.dsigmoid(FInput)[1] << endl;
+		layer lay(nneuron, ninputs); //constructor2 for initialization
+		vector<vector<float>> LW = lay.getWeights();
+		vector<float> LB = lay.getBias();
+		cout << "Weights: " << lay.getWeights()[0][0] << "," << lay.getWeights()[0][1] << " | " << lay.getWeights()[1][0] << "," << lay.getWeights()[1][1] << endl;
+		cout << "Bias: " << lay.getBias()[0] << " | " << lay.getBias()[1] << endl;
+		cout << "Result: " << *lay(FInput)[0] << " | " << *lay(FInput)[1] << endl;
+		cout << "DSigmoid: " << lay.dsigmoid()[0] << " | " << lay.dsigmoid()[1] << endl;
 
 		int loopsize = 100;
 		for (int i = 0; i < loopsize; i++)
 		{
 			cout << "loop: " << i << endl;
+			//convert the vectors of floats to vectors of pointers
+			//forloop given for clarity of algorithm
 			/*for (int j = 0; j < NS; j++)
 			{
-				
-				for (int k = 0; k < WS; k++)
-				{
-					LW[j][k] = randomize(-1, 1);
-				}
-				LB[j] = randomize(-1, 1);
+
+			for (int k = 0; k < WS; k++)
+			{
+			LW[j][k] = randomize(-1, 1);
+			}
+			LB[j] = randomize(-1, 1);
 			}*/
-			std::for_each(LW.begin(),LW.end(),
+			std::for_each(LW.begin(), LW.end(),
 				[&](vector<float> &weight) {
-				std::generate(weight.begin(), weight.end(), 
+				std::generate(weight.begin(), weight.end(),
 					[&]() {
-					return randomize(-1,1);
+					return randomize(-1, 1);
 				}
-					);
-					return weight;
+				);
+				return weight;
 			});
 			std::generate(LB.begin(), LB.end(),
 				[&]() {
 				return randomize(-1, 1);
 			});
-			pi.setWeights(LW);
-			pi.setBias(LB);
-			cout << "Weights: " << pi.getWeights()[0][0] << "," << pi.getWeights()[0][1] << " | "<< pi.getWeights()[1][0] << "," << pi.getWeights()[1][1] << endl;
-			cout << "Bias: " << pi.getBias()[0]<< " | " << pi.getBias()[1] << endl;
-			cout << "Result: " << *pi(FInput)[0] << " | " << *pi(FInput)[1] << endl;
-			cout << "DSigmoid: " << pi.dsigmoid()[0] << " | " << pi.dsigmoid(FInput)[1] << endl;
+			
+			//update the parameters
+			lay.setWeights(LW); //update the weights
+			lay.setBias(LB); //update the bias
+			cout << "Weights: " << lay.getWeights()[0][0] << "," << lay.getWeights()[0][1] << " | " << lay.getWeights()[1][0] << "," << lay.getWeights()[1][1] << endl;
+			cout << "Bias: " << lay.getBias()[0] << " | " << lay.getBias()[1] << endl;
+			cout << "Result: " << *lay(FInput)[0] << " | " << *lay(FInput)[1] << endl; //neuron output 
+			cout << "DSigmoid: " << lay.dsigmoid()[0] << " | " << lay.dsigmoid()[1] << endl; //dsigmoid output
 
 
 		}
 	}
-catch (const invalid_argument& e)
-{
-	cout << e.what() << endl;
+	catch (const invalid_argument& e)
+	{
+		cout << argerror.what() << endl;//outputs the error message
+		return EXIT_FAILURE;
 
-}
+	}
 	auto end = std::chrono::system_clock::now();
 	cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << endl;
 	return 0;
