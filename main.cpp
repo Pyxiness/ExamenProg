@@ -1,5 +1,5 @@
 #include "Layer.h"
-#include<chrono>
+
 
 using std::cout;
 
@@ -14,15 +14,11 @@ float randomize(float Minimum, float Maximum)
 int main() {
 	float x = 1;
 	
-	auto start = std::chrono::system_clock::now();
+	
 	int nneuron = 150; //number of neurons
 	int ninputs = 728; //number of inputs per neuron
 	vector<float*> FInput(ninputs);
-	//for loop that has been changed into an algorithm. Given for clarity of the algorithm
-	/*for (int j = 0; j < WS; j++)
-	{
-	FInput[j] = &x;
-	}*/
+	
 	std::generate(FInput.begin(), FInput.end(),
 		[&]() {
 		return &x;
@@ -42,17 +38,7 @@ int main() {
 		for (int i = 0; i < loopsize; i++)
 		{
 			cout << "loop: " << i << endl;
-			//convert the vectors of floats to vectors of pointers
-			//forloop given for clarity of algorithm
-			/*for (int j = 0; j < NS; j++)
-			{
-
-			for (int k = 0; k < WS; k++)
-			{
-			LW[j][k] = randomize(-1, 1);
-			}
-			LB[j] = randomize(-1, 1);
-			}*/
+			
 			std::for_each(LW.begin(), LW.end(),
 				[&](vector<float> &weight) {
 				std::generate(weight.begin(), weight.end(),
@@ -84,7 +70,5 @@ int main() {
 		return EXIT_FAILURE;
 
 	}
-	auto end = std::chrono::system_clock::now();
-	cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << endl;
-	return 0;
+
 }
