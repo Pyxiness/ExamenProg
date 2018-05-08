@@ -7,7 +7,7 @@ layer::layer(const vector<vector<float>>& LayerWeights, const vector<float>& Lay
 		throw std::invalid_argument("\n layer::layer1: dimension mismatch\n");
 	}
 	
-	setNumberOfNeurons(LayerBias.size()); // sets the amouunt of nuurons per layer
+	setNumberOfNeurons(LayerBias.size()); // sets the amouunt of neurons per layer
 	NumberOfInputs = LayerWeights.at(0).size(); //Because it is a priori known that every neuron takes an equal amount of inputs
 	LayerOutput.resize(NumberOfNeurons);
 	OutputPTR.resize(NumberOfNeurons);
