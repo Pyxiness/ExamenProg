@@ -138,7 +138,7 @@ const int layer::getNumberOfNeurons() //the number of neurons in the layer
 }
 
 
-vector<float*> layer::resultFunc(const vector<float*>& LayerInput) //calculates the output for each neuron in the layer
+vector<float*>& layer::resultFunc(const vector<float*>& LayerInput) //calculates the output for each neuron in the layer
 {
 	//test if it's the first layer
 	if (nullptr == LayerInput[0])
