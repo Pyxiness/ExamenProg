@@ -78,7 +78,7 @@ int main() {
 
 		}
 	}
-	catch (const invalid_argument& e)
+	catch (const invalid_argument& argerror)
 	{
 		cout << argerror.what() << endl;//outputs the error message
 		return EXIT_FAILURE;
