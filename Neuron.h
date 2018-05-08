@@ -36,7 +36,7 @@ public:
 protected:
 	vector<float> Weights;
 	float Bias;
-	int NumberOfInputs;
+	size_t NumberOfInputs;
 	float Output;
 };
 
