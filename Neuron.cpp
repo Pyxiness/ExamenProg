@@ -86,6 +86,11 @@ float neuron::getBias()
 
 void neuron::setNumberOfInputs(const int& InitNumberOfInputs)
 {
+	if (0 >= InitNumberOfInputs)
+	{
+		throw invalid_argument("setNumberOfInputs(): input must be a positive int greater than 0");
+	}
+
 	NumberOfInputs = InitNumberOfInputs;
 }
 

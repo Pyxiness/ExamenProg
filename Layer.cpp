@@ -160,6 +160,10 @@ vector<float> layer::getBias()
 
 void layer::setNumberOfNeurons(const int& InitNumberOfNeurons)
 {
+	if (0 >= InitNumberOfNeurons)
+	{
+		throw invalid_argument("setNumberOfNeurons(): input must be a positive int greater than 0");
+	}
 	NumberOfNeurons = InitNumberOfNeurons;
 }
 
