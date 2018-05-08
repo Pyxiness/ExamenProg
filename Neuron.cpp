@@ -58,7 +58,7 @@ float neuron::randomize(float Minimum, float Maximum)
 void neuron::setWeights(const vector<float>& WeightVector)
 {
 	Weights = WeightVector; //sets the weights
-	
+
 }
 
 void neuron::setBias(const float& BiasNumber)
@@ -66,7 +66,7 @@ void neuron::setBias(const float& BiasNumber)
 	Bias = BiasNumber; //sets the bias
 }
 
-void neuron::setNumberOfInputs(const int& InitNumberOfInputs) 
+void neuron::setNumberOfInputs(const int& InitNumberOfInputs)
 {
 	if (0 >= InitNumberOfInputs) //sets the number of inputs for the neurons
 	{
@@ -95,19 +95,19 @@ const int neuron::getNumberOfInputs()
 void neuron::sigmoid(float& z)
 {
 	z = 1 / (1 + exp(-z)); // sigmoid function
-	//return z;
+						   //return z;
 }
 
-float neuron::dsigmoid(const vector<float*>& input)
+/*float neuron::dsigmoid(const vector<float*>& input)
 {
 	activateFunc(input);
 	sigmoid(Output);
 	return Output*(1 - Output);;// derivative of the sigmoid
-}
+}*/
 
 float neuron::dsigmoid()
 {
-	return Output*(1 - Output);; 
+	return Output*(1 - Output);;
 }
 
 
@@ -123,12 +123,12 @@ void neuron::activateFunc(const vector<float*>& input)
 	vector<float> TInput(input.size()); //temporary vector to store transformed elements
 	std::transform(input.begin(), input.end(), TInput.begin(),
 		[](float* Element) {//converts input, a vector of ptrs to TInput, a vector of floats
-	//last argument is a lambda function. It takes input of type floatpointer and sends it to code in {} to return a float
+							//last argument is a lambda function. It takes input of type floatpointer and sends it to code in {} to return a float
 		return *Element;
 	});
 	Output = std::inner_product(Weights.begin(), Weights.end(), TInput.begin(), Bias); //std algorithm to calculate the inner product, i.e. sum of products
 
-	//return Output;
+																					   //return Output;
 }
 
 float neuron::resultFunc(const vector<float*>& input) //calculates the output of a neuron
