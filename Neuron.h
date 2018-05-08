@@ -26,8 +26,7 @@ public:
 	const int getNumberOfInputs(); 					//get-function to access #inputs = size of Weights
 
 	void sigmoid(float&); 						//Sigmoid function
-	//float dsigmoid(const vector <float*>&); 			//Derivative Sigmoid function
-	float dsigmoid(); 						//Same as above, but doesn't compute the neuron output again
+	float dsigmoid(); 						//Derivative Sigmoid function, output returned but not saved
 	void activateFunc(const vector <float*>&); 			//Activate function, calls sigmoid
 	float resultFunc(const vector <float*>&); 			//Calculates the neuron output, calls activateFunc
 	float operator()(const vector<float*>& NeuronInput) { return resultFunc(NeuronInput); } //Overloading ()
@@ -38,6 +37,6 @@ protected:
 	vector<float> Weights;
 	float Bias;
 	size_t NumberOfInputs;
-	float Output =0;
+	float Output =0;						//default set to zero
 };
 
