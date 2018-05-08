@@ -2,7 +2,7 @@
 
 layer::layer(const vector<vector<float>>& LayerWeights, const vector<float>& LayerBias, bool FirstLayerParam)
 {
-	if (LayerWeights.size() !=  LayerBias.size())
+	if (LayerWeights.size() != LayerBias.size())
 	{
 		throw invalid_argument("Both constructor inputs must be the same size");
 	}
@@ -12,7 +12,7 @@ layer::layer(const vector<vector<float>>& LayerWeights, const vector<float>& Lay
 	}
 
 	FirstLayer = FirstLayerParam;
-	NumberOfNeurons = LayerBias.size();
+	setNumberOfNeurons(LayerBias.size());
 	NumberOfInputs = LayerWeights.at(0).size(); //Because it is a priori known that every neuron takes an equal amount of inputs
 	LayerOutput.resize(NumberOfNeurons);
 	OutputPTR.resize(NumberOfNeurons);
@@ -23,10 +23,10 @@ layer::layer(const vector<vector<float>>& LayerWeights, const vector<float>& Lay
 	Neurons.reserve(NumberOfNeurons);
 	for (size_t i = 0; i < NumberOfNeurons; i++) //let's not use iterators here, shall we?
 	{
-		Neurons.push_back(neuron(LayerWeights.at(i), LayerBias.at(i) ));
+		Neurons.push_back(neuron(LayerWeights.at(i), LayerBias.at(i)));
 	}
 
-	
+
 
 }
 
@@ -43,7 +43,7 @@ layer::layer(const int& InitNumberOfNeurons, const int& InitNumberOfInputs, bool
 	}
 	//Neurons.assign(InitNumberOfNeurons, neuron(InitNumberOfInputs));
 	FirstLayer = FirstLayerParam;
-	NumberOfNeurons = InitNumberOfNeurons;
+	setNumberOfNeurons(InitNumberOfNeurons);
 	NumberOfInputs = InitNumberOfInputs;
 	LayerOutput.resize(NumberOfNeurons);
 	OutputPTR.resize(NumberOfNeurons);
@@ -57,7 +57,7 @@ layer::layer(const int& InitNumberOfNeurons, const int& InitNumberOfInputs, bool
 		Neurons.push_back(neuron(NumberOfInputs));
 	}
 
-	
+
 }
 
 layer::~layer()
@@ -93,7 +93,7 @@ void layer::setWeights(const vector<vector<float>>& LayerWeights)
 	}
 	/*for (size_t i = 0; i < LayerWeights.size(); i++)
 	{
-		Neurons[i].setWeights( LayerWeights.at(i) );
+	Neurons[i].setWeights( LayerWeights.at(i) );
 	}*/
 
 	int count = 0;
@@ -111,7 +111,7 @@ void layer::setBias(const vector<float>& LayerBias)
 	}
 	/*for (size_t i = 0; i < LayerBias.size(); i++)
 	{
-		Neurons[i].setBias( LayerBias.at(i) );
+	Neurons[i].setBias( LayerBias.at(i) );
 	}*/
 
 	int count = 0;
@@ -125,12 +125,12 @@ vector<vector<float>> layer::getWeights()
 {
 	vector<vector<float>> LayerWeights(Neurons.size());
 	std::transform(Neurons.begin(), Neurons.end(), LayerWeights.begin(),
-		[](neuron &Neuron){
+		[](neuron &Neuron) {
 		return Neuron.getWeights();
 	});
 	/*for (size_t i = 0; i < Neurons.size(); i++)
 	{
-		LayerWeights.at(i) = Neurons.at(i).getWeights();
+	LayerWeights.at(i) = Neurons.at(i).getWeights();
 	}*/
 	return LayerWeights;
 }
@@ -139,7 +139,7 @@ vector<float> layer::getBias()
 {
 	vector<float> LayerBias(Neurons.size());
 
-	std::transform(Neurons.begin(), Neurons.end(), LayerBias.begin(), 
+	std::transform(Neurons.begin(), Neurons.end(), LayerBias.begin(),
 		[](neuron &Neuron) {
 		//cout << Neuron.getBias() << endl;
 		return Neuron.getBias();
@@ -147,15 +147,20 @@ vector<float> layer::getBias()
 
 	/*size_t it = 0;
 	std::generate(LayerBias.begin(), LayerBias.end(),
-		[&]() {
-		return Neurons.at(it++).getBias();
+	[&]() {
+	return Neurons.at(it++).getBias();
 	});*/
 	/*for (size_t i = 0; i < Neurons.size(); i++)
 	{
-		LayerBias.at(i) = Neurons.at(i).getBias();
+	LayerBias.at(i) = Neurons.at(i).getBias();
 	}*/
 
 	return LayerBias;
+}
+
+void layer::setNumberOfNeurons(const int& InitNumberOfNeurons)
+{
+	NumberOfNeurons = InitNumberOfNeurons;
 }
 
 const int layer::getNumberOfNeurons()
@@ -165,13 +170,18 @@ const int layer::getNumberOfNeurons()
 
 vector<neuron> layer::getNeurons()
 {
-	
+
 	return Neurons;
 }
 
 vector<float*> layer::resultFunc(const vector<float*>& LayerInput)
 {
 	//vector<float> LayerOutput(NumberOfNeurons);
+	if (nullptr == LayerInput[0])
+	{
+		throw invalid_argument("resultFunc(): input doesn't point to anything");
+	}
+
 	if (FirstLayer == true)
 	{
 		if (LayerInput.size() != NumberOfNeurons)
@@ -182,14 +192,14 @@ vector<float*> layer::resultFunc(const vector<float*>& LayerInput)
 		//Because every Neuron in the first layer has only one weight/input
 
 		int count = 0;
-		std::transform(Neurons.begin(), Neurons.end(),LayerOutput.begin(),
+		std::transform(Neurons.begin(), Neurons.end(), LayerOutput.begin(),
 			[&](neuron &Neuron) {
 			return Neuron.resultFunc({ LayerInput.at(count++) });
 		});
 
 		/*for (size_t i = 0; i < NumberOfNeurons; i++)
 		{
-			LayerOutput.at(i) = Neurons.at(i).resultFunc( { LayerInput.at(i) } );
+		LayerOutput.at(i) = Neurons.at(i).resultFunc( { LayerInput.at(i) } );
 		}*/
 
 	}
@@ -203,10 +213,10 @@ vector<float*> layer::resultFunc(const vector<float*>& LayerInput)
 		//Because every Neuron in the has the same input: all the outputs of the previous layer 
 		/*for (size_t i = 0; i < NumberOfNeurons; i++)
 		{
-			LayerOutput.at(i) = Neurons.at(i).resultFunc(LayerInput);
+		LayerOutput.at(i) = Neurons.at(i).resultFunc(LayerInput);
 		}*/
 
-		std::transform(Neurons.begin(), Neurons.end(),LayerOutput.begin(),
+		std::transform(Neurons.begin(), Neurons.end(), LayerOutput.begin(),
 			[&](neuron &Neuron) {
 			return Neuron.resultFunc(LayerInput);
 		});
@@ -216,6 +226,11 @@ vector<float*> layer::resultFunc(const vector<float*>& LayerInput)
 
 vector<float> layer::dsigmoid(const vector<float*>& Input)
 {
+	if (nullptr == Input[0])
+	{
+		throw invalid_argument("dsigmoid(): input doesn't point to anything");
+	}
+
 	//same reasoning as in resultFunc
 	vector<float> DSigmoidOutput(NumberOfNeurons);
 	if (FirstLayer == true)
@@ -226,8 +241,8 @@ vector<float> layer::dsigmoid(const vector<float*>& Input)
 		}
 		/*for (size_t i = 0; i < NumberOfNeurons; i++)
 		{
-			z = Neurons.at(i).activateFunc({ Input.at(i) });
-			DSigmoidOutput.at(i) = *Neurons.at(i).dsigmoid(z);
+		z = Neurons.at(i).activateFunc({ Input.at(i) });
+		DSigmoidOutput.at(i) = *Neurons.at(i).dsigmoid(z);
 		}*/
 		std::transform(Neurons.begin(), Neurons.end(), DSigmoidOutput.begin(),
 			[&](neuron &Neuron) {
@@ -242,11 +257,11 @@ vector<float> layer::dsigmoid(const vector<float*>& Input)
 		}
 		/*for (size_t i = 0; i < NumberOfNeurons; i++)
 		{
-			z = Neurons.at(i).activateFunc(Input);
-			DSigmoidOutput.at(i) = *Neurons.at(i).dsigmoid(z);
+		z = Neurons.at(i).activateFunc(Input);
+		DSigmoidOutput.at(i) = *Neurons.at(i).dsigmoid(z);
 		}*/
 		//int count = 0;
-		std::transform(Neurons.begin(), Neurons.end(),DSigmoidOutput.begin(),
+		std::transform(Neurons.begin(), Neurons.end(), DSigmoidOutput.begin(),
 			[&](neuron &Neuron) {
 			return Neuron.dsigmoid(Input);
 		});
@@ -258,15 +273,15 @@ vector<float> layer::dsigmoid()
 {
 	//same reasoning as in resultFunc
 	vector<float> DSigmoidOutput(NumberOfNeurons);
-		/*for (int i = 0; i < NumberOfNeurons; i++)
-		{
-		z = Neurons.at(i).activateFunc(Input);
-		DSigmoidOutput.at(i) = *Neurons.at(i).dsigmoid(z);
-		}*/
-		//int count = 0;
-		std::transform(Neurons.begin(), Neurons.end(), DSigmoidOutput.begin(),
-			[&](neuron &Neuron) {
-			return Neuron.dsigmoid();
-		});
+	/*for (int i = 0; i < NumberOfNeurons; i++)
+	{
+	z = Neurons.at(i).activateFunc(Input);
+	DSigmoidOutput.at(i) = *Neurons.at(i).dsigmoid(z);
+	}*/
+	//int count = 0;
+	std::transform(Neurons.begin(), Neurons.end(), DSigmoidOutput.begin(),
+		[&](neuron &Neuron) {
+		return Neuron.dsigmoid();
+	});
 	return DSigmoidOutput;
 }

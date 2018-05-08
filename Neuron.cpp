@@ -3,19 +3,21 @@
 neuron::neuron(const vector<float>& WeightVector, const float& BiasNumber)
 {
 	setWeights(WeightVector);
+	setNumberOfInputs(Weights.size());
 	setBias(BiasNumber);
 }
 
 neuron::neuron(const int& WeightVectorSize)
 {
+	setNumberOfInputs(WeightVectorSize);
 	Weights.resize(WeightVectorSize);
 	/*for (auto& i : Weights) //range-based loop, also iterator, but more compact
 	{
-		i = randomize(-1, 1);
+	i = randomize(-1, 1);
 	}*/
-	std::generate(Weights.begin(), Weights.end(), 
+	std::generate(Weights.begin(), Weights.end(),
 		[&]() {
-		return randomize(-1,1);
+		return randomize(-1, 1);
 	});
 
 	Bias = randomize(-1, 1);
@@ -50,7 +52,7 @@ void neuron::setWeights(const vector<float>& WeightVector)
 	/*Weights.resize(WeightVector.size());
 	for (int i = 0; i < WeightVector.size(); i++)
 	{
-		Weights[i] = *WeightVector[i];
+	Weights[i] = *WeightVector[i];
 	}*/
 }
 
@@ -72,7 +74,7 @@ vector<float> neuron::getWeights()
 	/*vector<fp> TempWeights(Weights.size());
 	for (int i = 0; i < Weights.size(); i++)
 	{
-		TempWeights[i] = &Weights[i];
+	TempWeights[i] = &Weights[i];
 	}*/
 	return Weights;
 }
@@ -82,9 +84,15 @@ float neuron::getBias()
 	return Bias;
 }
 
+void neuron::setNumberOfInputs(const int& InitNumberOfInputs)
+{
+	NumberOfInputs = InitNumberOfInputs;
+}
+
+
 const int neuron::getNumberOfInputs()
 {
-	return Weights.size();
+	return NumberOfInputs;
 }
 
 void neuron::sigmoid(float& z)
@@ -111,13 +119,13 @@ void neuron::activateFunc(const vector<float*>& input)
 	Output = 0;
 	/*for (int i = 0; i < input.size(); i++)
 	{
-		Output += Weights.at(i) * *input[i]; //w.x dot product
+	Output += Weights.at(i) * *input[i]; //w.x dot product
 	}
 	Output += Bias;*/
 	vector<float> TInput(input.size());
-	std::transform(input.begin(), input.end(), TInput.begin(), 
+	std::transform(input.begin(), input.end(), TInput.begin(),
 		[](float* Element) {
-		return *Element; 
+		return *Element;
 	});
 	Output = std::inner_product(Weights.begin(), Weights.end(), TInput.begin(), Bias);
 
