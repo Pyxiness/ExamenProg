@@ -16,14 +16,14 @@ public:
 	vector<float> getBias(); 						//get-function to provide access to bias
 	const int getNumberOfNeurons(); 					//get-function to provide access  to number of neurons
 
-	vector<float*>& resultFunc(const vector<float*>&); 			//calculates the output vector of the layer.
+	vector<float>& resultFunc(const vector<float>&); 			//calculates the output vector of the layer.
 	vector<float> dsigmoid();  						//calculates the derivative of sigmoid, returns value but doesn't save
-	vector<float*>& operator()(const vector<float*> LayerInput) { return resultFunc(LayerInput); }
+	vector<float>& operator()(const vector<float> LayerInput) { return resultFunc(LayerInput); }
 	layer(const layer&); 							//Copy constructor, don't use. Use constructor instead
 	layer& operator = (const layer&); 					//Assignment constructor, don't use. Use constructor instead
 
 	vector<float> LayerOutput;
-	vector<float*> OutputPTR;
+	//vector<float*> OutputPTR;
 
 protected:
 	void setNumberOfNeurons(const int&);					//set-function for the number of neurons in a layer

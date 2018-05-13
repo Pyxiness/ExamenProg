@@ -13,15 +13,15 @@ float randomize(float Minimum, float Maximum)
 
 int main() {
 	float x = 1;
-	
-	
+
+
 	int nneuron = 150; //number of neurons
 	int ninputs = 728; //number of inputs per neuron
-	vector<float*> FInput(ninputs);
-	
+	vector<float> FInput(ninputs);
+
 	std::generate(FInput.begin(), FInput.end(),
 		[&]() {
-		return &x;
+		return 1;
 	});
 
 	//copy constructor and assignment operator test
@@ -31,14 +31,14 @@ int main() {
 		vector<float> LB = lay.getBias();
 		cout << "Weights: " << lay.getWeights()[0][0] << "," << lay.getWeights()[0][1] << " | " << lay.getWeights()[1][0] << "," << lay.getWeights()[1][1] << endl;
 		cout << "Bias: " << lay.getBias()[0] << " | " << lay.getBias()[1] << endl;
-		cout << "Result: " << *lay(FInput)[0] << " | " << *lay(FInput)[1] << endl;
+		cout << "Result: " << lay(FInput)[0] << " | " << lay(FInput)[1] << endl;
 		cout << "DSigmoid: " << lay.dsigmoid()[0] << " | " << lay.dsigmoid()[1] << endl;
 
 		int loopsize = 100;
 		for (int i = 0; i < loopsize; i++)
 		{
 			cout << "loop: " << i << endl;
-			
+
 			std::for_each(LW.begin(), LW.end(),
 				[&](vector<float> &weight) {
 				std::generate(weight.begin(), weight.end(),
@@ -52,13 +52,13 @@ int main() {
 				[&]() {
 				return randomize(-1, 1);
 			});
-			
+
 			//update the parameters
 			lay.setWeights(LW); //update the weights
 			lay.setBias(LB); //update the bias
 			cout << "Weights: " << lay.getWeights()[0][0] << "," << lay.getWeights()[0][1] << " | " << lay.getWeights()[1][0] << "," << lay.getWeights()[1][1] << endl;
 			cout << "Bias: " << lay.getBias()[0] << " | " << lay.getBias()[1] << endl;
-			cout << "Result: " << *lay(FInput)[0] << " | " << *lay(FInput)[1] << endl; //neuron output 
+			cout << "Result: " << lay(FInput)[0] << " | " << lay(FInput)[1] << endl; //neuron output 
 			cout << "DSigmoid: " << lay.dsigmoid()[0] << " | " << lay.dsigmoid()[1] << endl; //dsigmoid output
 
 
