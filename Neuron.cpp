@@ -11,7 +11,7 @@ neuron::neuron(const int& WeightVectorSize) //constructor 2
 {
 	setNumberOfInputs(WeightVectorSize);
 	Weights.resize(WeightVectorSize);
-	
+
 	std::generate(Weights.begin(), Weights.end(), //generates random weights using algorithms and lambda function
 		[&]() {
 		return randomize(-1, 1);
@@ -91,7 +91,7 @@ const int neuron::getNumberOfInputs()
 void neuron::sigmoid(float& z)
 {
 	z = 1 / (1 + exp(-z)); // sigmoid function
-	
+
 }
 
 
@@ -101,21 +101,21 @@ float neuron::dsigmoid()
 }
 
 
-void neuron::activateFunc(const vector<float*>& input)
+void neuron::activateFunc(const vector<float>& input)
 {
 	Output = 0;
-	
-	vector<float> TInput(input.size()); //temporary vector to store transformed elements
+
+	/*vector<float> TInput(input.size()); //temporary vector to store transformed elements
 	std::transform(input.begin(), input.end(), TInput.begin(),
 		[](float* Element) {//converts input, a vector of ptrs to TInput, a vector of floats
-		//last argument is a lambda function. It takes input of type floatpointer and sends it to code in {} to return a float
+							//last argument is a lambda function. It takes input of type floatpointer and sends it to code in {} to return a float
 		return *Element;
-	});
-	Output = std::inner_product(Weights.begin(), Weights.end(), TInput.begin(), Bias); //std algorithm to calculate the inner product, i.e. sum of products
+	});*/
+	Output = std::inner_product(Weights.begin(), Weights.end(), input.begin(), Bias); //std algorithm to calculate the inner product, i.e. sum of products
 
 }
 
-float neuron::resultFunc(const vector<float*>& input) //calculates the output of a neuron
+float neuron::resultFunc(const vector<float>& input) //calculates the output of a neuron
 {
 	activateFunc(input);
 	sigmoid(Output);

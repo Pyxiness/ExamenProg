@@ -27,9 +27,9 @@ public:
 
 	void sigmoid(float&); 						//Sigmoid function
 	float dsigmoid(); 						//Derivative Sigmoid function, output returned but not saved
-	void activateFunc(const vector <float*>&); 			//Activate function, calls sigmoid
-	float resultFunc(const vector <float*>&); 			//Calculates the neuron output, calls activateFunc
-	float operator()(const vector<float*>& NeuronInput) { return resultFunc(NeuronInput); } //Overloading ()
+	void activateFunc(const vector <float>&); 			//Activate function, calls sigmoid
+	float resultFunc(const vector <float>&); 			//Calculates the neuron output, calls activateFunc
+	float operator()(const vector<float>& NeuronInput) { return resultFunc(NeuronInput); } //Overloading ()
 	float randomize(float, float); 					//rng function
 
 protected:
@@ -37,6 +37,6 @@ protected:
 	vector<float> Weights;
 	float Bias;
 	size_t NumberOfInputs;
-	float Output =0;						//default set to zero
+	float Output = 0;						//default set to zero
 };
 
