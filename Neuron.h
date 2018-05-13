@@ -30,7 +30,7 @@ public:
 	void activateFunc(const vector <float>&); 			//Activate function, calls sigmoid
 	float resultFunc(const vector <float>&); 			//Calculates the neuron output, calls activateFunc
 	float operator()(const vector<float>& NeuronInput) { return resultFunc(NeuronInput); } //Overloading ()
-	float randomize(float, float); 					//rng function
+	float randomize(const float&, const float&); 					//rng function
 
 protected:
 	void setNumberOfInputs(const int&); 				//Sets number of inputs = number of weights

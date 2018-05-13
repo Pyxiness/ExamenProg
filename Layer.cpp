@@ -9,12 +9,6 @@ layer::layer(const vector<vector<float>>& LayerWeights, const vector<float>& Lay
 
 	setNumberOfNeurons(LayerBias.size()); // sets the amouunt of neurons per layer
 	NumberOfInputs = LayerWeights.at(0).size(); //Because it is a priori known that every neuron takes an equal amount of inputs
-	LayerOutput.resize(NumberOfNeurons);
-	/*OutputPTR.resize(NumberOfNeurons);
-	std::transform(LayerOutput.begin(), LayerOutput.end(), OutputPTR.begin(),
-		[](float& num) {
-		return &num;
-	});*/
 	Neurons.reserve(NumberOfNeurons); //creates a vector of neurons using neuron/constructor2
 	for (size_t i = 0; i < NumberOfNeurons; i++)
 	{
@@ -35,12 +29,6 @@ layer::layer(const int& InitNumberOfNeurons, const int& InitNumberOfInputs)
 
 	setNumberOfNeurons(InitNumberOfNeurons); //sets parameters
 	NumberOfInputs = InitNumberOfInputs;
-	LayerOutput.resize(NumberOfNeurons);
-	/*OutputPTR.resize(NumberOfNeurons);
-	std::transform(LayerOutput.begin(), LayerOutput.end(), OutputPTR.begin(),
-		[](float& num) {
-		return &num;
-	});*/
 	Neurons.reserve(NumberOfNeurons);
 	for (size_t i = 0; i < NumberOfNeurons; i++)
 	{
@@ -138,13 +126,13 @@ const int layer::getNumberOfNeurons() //the number of neurons in the layer
 }
 
 
-vector<float>& layer::resultFunc(const vector<float>& LayerInput) //calculates the output for each neuron in the layer
+vector<float> layer::resultFunc(const vector<float>& LayerInput) //calculates the output for each neuron in the layer
 {
-	//test if it's the first layer
 	if (LayerInput.size() != NumberOfInputs)
 	{
 		throw std::invalid_argument("\nlayer::resultFunc: dimension mismatch\n");
 	}
+	vector<float> LayerOutput(NumberOfNeurons);
 
 	//Because every Neuron in the has the same input: all the outputs of the previous layer,
 	//so it is a priori known that every sub vector will have the same size
