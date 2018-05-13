@@ -1,3 +1,8 @@
+//Ivan-Jago Coric
+//Jana Christopher
+//Stefan Koekkoek
+//
+//
 #pragma once
 #include"Neuron.h"
 #include<stdexcept>

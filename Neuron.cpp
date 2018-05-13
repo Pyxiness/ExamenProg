@@ -1,3 +1,8 @@
+//Ivan-Jago Coric
+//Jana Christopher
+//Stefan Koekkoek
+//
+//
 #include "Neuron.h"
 
 neuron::neuron(const vector<float>& WeightVector, const float& BiasNumber) //constructor 1

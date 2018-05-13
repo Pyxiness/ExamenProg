@@ -1,4 +1,8 @@
-
+#Ivan-Jago Coric
+#Jana Christopher
+#Stefan Koekkoek
+#
+#
 #Makefile 
 
 SHELL = /bin/bash

@@ -1,4 +1,8 @@
-
+//Ivan-Jago Coric
+//Jana Christopher
+//Stefan Koekkoek
+//
+//
 #include "Layer.h"
 
 layer::layer(const vector<vector<float>>& LayerWeights, const vector<float>& LayerBias)

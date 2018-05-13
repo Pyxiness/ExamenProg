@@ -1,3 +1,8 @@
+//Ivan-Jago Coric
+//Jana Christopher
+//Stefan Koekkoek
+//
+//
 #include "Layer.h"
 
 
