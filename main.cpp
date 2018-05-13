@@ -12,17 +12,11 @@ float randomize(float Minimum, float Maximum)
 }
 
 int main() {
-	float x = 1;
 
 
 	int nneuron = 150; //number of neurons
 	int ninputs = 728; //number of inputs per neuron
-	vector<float> FInput(ninputs);
-
-	std::generate(FInput.begin(), FInput.end(),
-		[&]() {
-		return 1;
-	});
+	vector<float> FInput(ninputs, 1);
 
 	//copy constructor and assignment operator test
 	try {
