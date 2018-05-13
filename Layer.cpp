@@ -146,7 +146,6 @@ vector<float> layer::resultFunc(const vector<float>& LayerInput) //calculates th
 	return LayerOutput;
 }
 
-
 vector<float> layer::dsigmoid()
 {
 	//same reasoning as in resultFunc
