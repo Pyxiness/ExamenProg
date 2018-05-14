@@ -95,12 +95,8 @@ const int neuron::getNumberOfInputs()
 
 void neuron::sigmoid(float& z)
 {
-    //if z > 0.5, round to 1, otherwise to 0
 
-    if(1 / (1 + exp(-z)) >= 0.5){ // sigmoid function
-	z = 1;
-    }
-    else{ z = 0;}
+	z = 1/ (1 + exp(-z)); // sigmoid function
 
 }
 
@@ -122,5 +118,8 @@ float neuron::resultFunc(const vector<float>& input) //calculates the output of 
 {
 	activateFunc(input);
 	sigmoid(Output);
-	return  Output;
+    //return rounded values, value of Output remains unchanged so that dsigmoid keeps working
+    //if Output >= 0.5, round to 1, otherwise to 0
+    if(Output  >= 0.5){return  1; }
+    else{ return 0;}
 }
