@@ -93,10 +93,10 @@ const int neuron::getNumberOfInputs()
 	return NumberOfInputs; //returns the number of inputs for the neurons
 }
 
-void neuron::sigmoid(float& z)
+float neuron::sigmoid(const float& z)
 {
 
-	z = 1/ (1 + exp(-z)); // sigmoid function
+	return  1/ (1 + exp(-z)); // sigmoid function
 
 }
 
@@ -110,16 +110,13 @@ float neuron::dsigmoid()
 void neuron::activateFunc(const vector<float>& input)
 {
 	Output = 0;
-	Output = std::inner_product(Weights.begin(), Weights.end(), input.begin(),-Bias) ; //std algorithm to calculate the inner product, i.e. sum of products
+	Output = std::inner_product(Weights.begin(), Weights.end(), input.begin(),Bias) ; //std algorithm to calculate the inner product, i.e. sum of products
 
 }
 
 float neuron::resultFunc(const vector<float>& input) //calculates the output of a neuron
 {
 	activateFunc(input);
-	sigmoid(Output);
-    //return rounded values, value of Output remains unchanged so that dsigmoid keeps working
-    //if Output >= 0.5, round to 1, otherwise to 0
-    if(Output  >= 0.5){return  1; }
-    else{ return 0;}
+	Output = sigmoid(Output);
+    return Output;
 }

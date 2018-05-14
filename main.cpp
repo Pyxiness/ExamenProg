@@ -35,7 +35,7 @@ int main() {
 		cout << "Result: " << lay(FInput)[0] << " | " << lay(FInput)[0] << endl;
 		cout << "DSigmoid: " << lay.dsigmoid()[0] << " | " << lay.dsigmoid()[1] << endl;
 
-		int loopsize = 100;
+		int loopsize = 0;
 		for (int i = 0; i < loopsize; i++)
 		{
 			cout << "loop: " << i << endl;
@@ -69,10 +69,10 @@ int main() {
 
 
     //XOR network
-    layer first({{1,1},{-1,-1}}, {0.5,-1.5});
-    layer last({{1,1}},{1.5}); 
+    layer first({{1,1},{-1,-1}}, {-0.5,1.5});
+    layer last({{1,1}},{float(-1.2)}); 
 
-    vector<float> inputt = {0,1}; //input only for first layer
+    vector<float> inputt = {1,1}; //input only for first layer
     vector<float> inputt2 = first.resultFunc(inputt);  //output of first layer = input for last layer
    //Truth table 
     cout<<"First input: "<<inputt[0]<<" , "<<inputt[1]<<endl;
