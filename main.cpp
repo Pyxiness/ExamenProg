@@ -66,12 +66,15 @@ int main() {
 		}
 
 */
+
+
+    //XOR network
     layer first({{1,1},{-1,-1}}, {0.5,-1.5});
     layer last({{1,1}},{1.5}); 
 
-    vector<float> inputt = {0,1}; //input only for first layer
+    vector<float> inputt = {0,0}; //input only for first layer
     vector<float> inputt2 = first.resultFunc(inputt);  //output of first layer = input for last layer
-    
+   //Truth table 
     cout<<"First input: "<<inputt[0]<<" , "<<inputt[1]<<endl;
     cout<<"Or: "<<first(inputt)[0]<<endl;
     cout<<"nAnd: "<<first(inputt)[1]<<endl;

@@ -95,7 +95,12 @@ const int neuron::getNumberOfInputs()
 
 void neuron::sigmoid(float& z)
 {
-	z = 1 / (1 + exp(-z)); // sigmoid function
+    //if z > 0.5, round to 1, otherwise to 0
+
+    if(1 / (1 + exp(-z)) >= 0.5){ // sigmoid function
+	z = 1;
+    }
+    else{ z = 0;}
 
 }
 
