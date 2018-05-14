@@ -109,7 +109,7 @@ float neuron::dsigmoid()
 void neuron::activateFunc(const vector<float>& input)
 {
 	Output = 0;
-	Output = std::inner_product(Weights.begin(), Weights.end(), input.begin(), Bias); //std algorithm to calculate the inner product, i.e. sum of products
+	Output = std::inner_product(Weights.begin(), Weights.end(), input.begin(),-Bias) ; //std algorithm to calculate the inner product, i.e. sum of products
 
 }
 

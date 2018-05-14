@@ -25,12 +25,14 @@ int main() {
 
 	//copy constructor and assignment operator test
 	try {
+
+/*
 		layer lay(nneuron, ninputs); //constructor2 for initialization
 		vector<vector<float>> LW = lay.getWeights();
 		vector<float> LB = lay.getBias();
 		cout << "Weights: " << lay.getWeights()[0][0] << "," << lay.getWeights()[0][1] << " | " << lay.getWeights()[1][0] << "," << lay.getWeights()[1][1] << endl;
 		cout << "Bias: " << lay.getBias()[0] << " | " << lay.getBias()[1] << endl;
-		cout << "Result: " << lay(FInput)[0] << " | " << lay(FInput)[1] << endl;
+		cout << "Result: " << lay(FInput)[0] << " | " << lay(FInput)[0] << endl;
 		cout << "DSigmoid: " << lay.dsigmoid()[0] << " | " << lay.dsigmoid()[1] << endl;
 
 		int loopsize = 100;
@@ -57,11 +59,31 @@ int main() {
 			lay.setBias(LB); //update the bias
 			cout << "Weights: " << lay.getWeights()[0][0] << "," << lay.getWeights()[0][1] << " | " << lay.getWeights()[1][0] << "," << lay.getWeights()[1][1] << endl;
 			cout << "Bias: " << lay.getBias()[0] << " | " << lay.getBias()[1] << endl;
-			cout << "Result: " << lay(FInput)[0] << " | " << lay(FInput)[1] << endl; //neuron output 
+			cout << "Result: " << lay(FInput)[0] << " | " << lay(FInput)[0] << endl; //neuron output 
 			cout << "DSigmoid: " << lay.dsigmoid()[0] << " | " << lay.dsigmoid()[1] << endl; //dsigmoid output
 
 
 		}
+
+*/
+    layer first({{1,1},{-1,-1}}, {0.5,-1.5});
+    layer last({{1,1}},{1.5}); 
+
+    vector<float> inputt = {0,1}; //input only for first layer
+    vector<float> inputt2 = first.resultFunc(inputt);  //output of first layer = input for last layer
+    
+    cout<<"First input: "<<inputt[0]<<" , "<<inputt[1]<<endl;
+    cout<<"Or: "<<first(inputt)[0]<<endl;
+    cout<<"nAnd: "<<first(inputt)[1]<<endl;
+    cout<<"Last input; "<<inputt2[0]<<" , "<<inputt2[1]<<endl;
+    cout<<"XOR: "<<last.resultFunc(inputt2)[0]<<endl;
+
+
+
+
+
+
+
 	}
 	catch (const invalid_argument& argerror)
 	{
