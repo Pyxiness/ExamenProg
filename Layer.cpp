@@ -76,6 +76,13 @@ void layer::setWeights(const vector<vector<float>>& LayerWeights)  //sets weight
 		[&](neuron &Neuron) {
 		Neuron.setWeights(LayerWeights.at(count++));
 	});
+	//[&]: lambda function needs access to elements outside its scope: index and LayerWeights
+    	//(neuron &Neuron): for_each does something similar to f(*iterator), with f being the function from the last argument and iterator the current iterator of the container in the first argument. *iterator is thus an object of type neuron that will be used as input for the lambda function
+    	//{Neuron.setWeights(...)} will call neuron::setWeights on the provided Neuron
+    	//f(i++); = { f(i); ++i; }
+    	//f(++i); = { ++i; f(i); } this may cause an 'out_of_range' error in f
+    	//f(i++); h(i); = { f(i); ++i; h(i); } this may cause an 'out_of_range' error in h, prevent it by only doing i++ in the function that will be called last
+
 }
 
 void layer::setBias(const vector<float>& LayerBias) //sets bias for every neuron
