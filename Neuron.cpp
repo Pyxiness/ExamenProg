@@ -118,5 +118,5 @@ float neuron::resultFunc(const vector<float>& input) //calculates the output of 
 {
 	activateFunc(input);
 	Output = sigmoid(Output);
-    return Output;
+    	return Output;
 }
