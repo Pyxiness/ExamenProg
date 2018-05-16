@@ -30,12 +30,12 @@ public:
 	float getBias(); 						//get-function to access bias
 	const int getNumberOfInputs(); 					//get-function to access #inputs = size of Weights
 
-	float sigmoid(const float&); 						//Sigmoid function
+	float sigmoid(const float&); 					//Sigmoid function
 	float dsigmoid(); 						//Derivative Sigmoid function, output returned but not saved
 	void activateFunc(const vector <float>&); 			//Activate function, calls sigmoid
 	float resultFunc(const vector <float>&); 			//Calculates the neuron output, calls activateFunc
 	float operator()(const vector<float>& NeuronInput) { return resultFunc(NeuronInput); } //Overloading ()
-	float randomize(const float&, const float&); 					//rng function
+	float randomize(const float&, const float&); 			//rng function
 
 protected:
 	void setNumberOfInputs(const int&); 				//Sets number of inputs = number of weights
