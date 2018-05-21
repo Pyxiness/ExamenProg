@@ -16,7 +16,7 @@ neuron::neuron(const int& WeightVectorSize) //constructor 2
 {
 	setNumberOfInputs(WeightVectorSize);
 	Weights.resize(WeightVectorSize);
-	float OptimalInterval = 1/sqrt(NumberOfInputs); //Optimal interval according to Xavier initialization
+	float OptimalInterval = 1/float(sqrt(NumberOfInputs)); //Optimal interval according to Xavier initialization
 	std::generate(Weights.begin(), Weights.end(), //generates random weights using algorithms and lambda function
 		[&]() {
 		//return randomize(-1, 1);
